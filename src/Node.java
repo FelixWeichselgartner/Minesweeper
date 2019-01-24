@@ -1,3 +1,7 @@
+/**
+ * node class
+ * main class contains a 2d array of this object
+ */
 public class Node {
     //e = empty, b = bomb
     private char content;

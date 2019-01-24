@@ -3,6 +3,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * main class
+ */
 public class Minesweeper extends JPanel {
     private static int WIDTH = 15, HEIGHT = 15;
     private static int amountPixels = 40;
@@ -11,6 +14,9 @@ public class Minesweeper extends JPanel {
     private int amountBombs;
     private Boolean gameOver;
 
+    /**
+     * generates a certain amount of random generated bombs
+     */
     public void generateBombs() {
         Random randomNumber = new Random();
         int x, y;
@@ -24,6 +30,9 @@ public class Minesweeper extends JPanel {
         }
     }
 
+    /**
+     * constructor inits all params
+     */
     public Minesweeper() {
         for (int i = 0; i < WIDTH; i++) {
             for (int k = 0; k < HEIGHT; k++) {
@@ -35,6 +44,14 @@ public class Minesweeper extends JPanel {
         generateBombs();
     }
 
+    /**
+     * paints the gameBoard
+     * red squares for bombs
+     * gray squares for not opened nodes
+     * orange squares for marked nodes
+     * light grey for opened nodes with blue number -> amount of bombs around node
+     * @param g
+     */
     public void paint(Graphics g) {
         int constantx = 8;
         int constanty = 10;
@@ -69,11 +86,18 @@ public class Minesweeper extends JPanel {
         }
     }
 
+    /**
+     * updates the current window
+     * @param jframe    JFrame from gameloop (main)
+     */
     public void updateWindow(JFrame jframe) {
         jframe.getContentPane().validate();
         jframe.repaint();
     }
 
+    /**
+     * calculates for every node the amount of bombs around it
+     */
     public void calculate() {
         int temp;
         //middle
@@ -133,7 +157,12 @@ public class Minesweeper extends JPanel {
         }
     }
 
-    public Boolean gameloop(JFrame frame) {
+    /**
+     * gameloop with MouseListener
+     * breaks out of gameloop if a bomb node is opened
+     * @param frame     JFrame from main
+     */
+    public void gameloop(JFrame frame) {
         //implement MouseListener
         frame.addMouseListener(new MouseListener() {
             @Override
@@ -206,9 +235,13 @@ public class Minesweeper extends JPanel {
             }
         }
         updateWindow(frame);
-        return true;
     }
 
+    /**
+     * main function
+     * setting up JFrame and starting gameloop
+     * @param args
+     */
     public static void main(String[] args) {
         Minesweeper newGame = new Minesweeper();
 
