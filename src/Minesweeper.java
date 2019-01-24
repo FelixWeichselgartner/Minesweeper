@@ -44,7 +44,7 @@ public class Minesweeper extends JPanel {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
         for (int i = 0; i < WIDTH; i++) {
             for (int k = 0; k < HEIGHT; k++) {
-                if (!gameBoard[i][k].getOpened()) {
+                if (!gameBoard[i][k].getOpened() && !gameOver) {
                     //not opened
                     if (gameBoard[i][k].getMarked()) {
                         g.setColor(Color.orange);
@@ -164,7 +164,11 @@ public class Minesweeper extends JPanel {
                     System.out.println("X = " + X + " Y = " + Y);
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                     if (X != -1 && Y != -1) {
-                        gameBoard[X][Y].setMarked(true);
+                        if (gameBoard[X][Y].getMarked()) {
+                            gameBoard[X][Y].setMarked(false);
+                        } else {
+                            gameBoard[X][Y].setMarked(true);
+                        }
                     }
                     System.out.println("X = " + X + " Y = " + Y);
                 }
@@ -201,6 +205,7 @@ public class Minesweeper extends JPanel {
                 break;
             }
         }
+        updateWindow(frame);
         return true;
     }
 
