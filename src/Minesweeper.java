@@ -142,6 +142,32 @@ public class Minesweeper extends JPanel {
                 int mouseX = e.getX();
                 int mouseY = e.getY();
                 System.out.println("mouseX = " + mouseX + " mouseY = " + mouseY);
+
+                int X = -1, Y = -1;
+                for (int i = 0; i < WIDTH; i++) {
+                    if (mouseX > i*amountPixels+i*space && mouseX < (i+1)*amountPixels+i*space) {
+                        X = i;
+                    }
+                }
+                for (int i = 0; i < HEIGHT; i++) {
+                    if (mouseY > i*amountPixels+i*space+30 && mouseY < (i+1)*amountPixels+i*space+30) {
+                        Y = i;
+                    }
+                }
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (X != -1 && Y != -1) {
+                        gameBoard[X][Y].setOpened(true);
+                        if (gameBoard[X][Y].getContent() == 'b') {
+                            gameOver = true;
+                        }
+                    }
+                    System.out.println("X = " + X + " Y = " + Y);
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    if (X != -1 && Y != -1) {
+                        gameBoard[X][Y].setMarked(true);
+                    }
+                    System.out.println("X = " + X + " Y = " + Y);
+                }
             }
 
             @Override
@@ -171,25 +197,25 @@ public class Minesweeper extends JPanel {
         while(true) {
             updateWindow(frame);
             System.out.println("running ");
-            break;
+            if (gameOver) {
+                break;
+            }
         }
-
-
-        return false;
+        return true;
     }
 
     public static void main(String[] args) {
         Minesweeper newGame = new Minesweeper();
 
         JFrame frame = new JFrame("Minesweeper");
-        frame.setSize((WIDTH+1)*amountPixels+(WIDTH-1)*space, (HEIGHT+1)*amountPixels+(HEIGHT-1)*space);
+        frame.setSize((WIDTH+1)*amountPixels+(WIDTH-1)*space-23, (HEIGHT+1)*amountPixels+(HEIGHT-1)*space);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(newGame);
         frame.setVisible(true);
 
-        newGame.gameOver = newGame.gameloop(frame);
-        if (newGame.gameOver == true) {
+        newGame.gameloop(frame);
+        if (newGame.gameOver) {
             System.out.println("you lost!");
         }
     }
