@@ -205,7 +205,7 @@ public class Minesweeper extends JPanel {
                     }
                 }
                 if (!initialised) {
-                    if (X != -1 && Y != -1) {
+                    if (X != -1 && Y != -1 && (X > 0 && Y > 0 && X < WIDTH - 1 && Y < HEIGHT - 1)) {
                         gameBoard[X][Y].setOpened(true);
                         for (int l = 0; l < 3; l++) {
                             gameBoard[l + X - 1][Y - 1].setOpened(true);
